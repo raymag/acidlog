@@ -28,11 +28,11 @@ export const Body = styled.View`
   padding: 0 10px;
   margin-bottom: 25px;
 `;
-export const ProfileImage = styled.View`
+export const ProfileImage = styled.Image`
   width: 100px;
   height: 100px;
   max-width: 40%;
-  background: ${(props: themeType) => props.theme.colors.dark};
+  // background: ${(props: themeType) => props.theme.colors.dark};
   border-radius: 75px;
   border: solid 3px ${(props: themeType) => props.theme.colors.primary};
 `;

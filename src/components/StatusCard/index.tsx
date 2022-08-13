@@ -21,7 +21,11 @@ const StatusCard = () => {
         <Subtitle>Sexta Feira</Subtitle>
       </Header>
       <Body>
-        <ProfileImage />
+        <ProfileImage
+          source={{
+            uri: 'https://s2.static.brasilescola.uol.com.br/be/2021/12/tucano-toco.jpg',
+          }}
+        />
         <Message>
           <TitleMessage>Hello, Magno</TitleMessage>
           <TextMessage>
