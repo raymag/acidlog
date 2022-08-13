@@ -25,6 +25,8 @@ const buttonStyle = {
   paddingBottom: 2,
   borderWidth: 1,
   marginLeft: 5,
+  marginTop: 0,
+  marginBottom: 0,
 };
 const buttonFontStyle = {
   fontSize: 12,
