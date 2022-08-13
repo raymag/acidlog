@@ -13,7 +13,7 @@ const Home = () => {
       <ScrollView>
         <Content>
           <StatusCard />
-          <Button text="Novo log" />
+          <Button text="Novo log" type="primary" />
 
           {[...Array(5).keys()].map(i => (
             <Log
