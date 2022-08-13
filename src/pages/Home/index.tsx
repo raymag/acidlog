@@ -7,10 +7,10 @@ import Button from '../../components/Button';
 import Log from '../../components/Log';
 import logService, {LogType} from '../../services/log';
 
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const Home = () => {
-  const [refresh, setRefresh] = useState(true);
+  const route = useRoute();
   const [logs, setLogs] = useState<LogType[]>([]);
   const {navigate} = useNavigation<any>();
 
@@ -23,7 +23,7 @@ const Home = () => {
   };
   useEffect(() => {
     fetch();
-  }, [refresh]);
+  }, [route.params]);
 
   return (
     <Container>
@@ -35,11 +35,6 @@ const Home = () => {
             text="Novo log"
             type="primary"
             onPress={() => navigate('Write')}
-          />
-          <Button
-            text="Refresh"
-            type="leanPrimary"
-            onPress={() => setRefresh(!refresh)}
           />
 
           {logs.map((log, i) => (

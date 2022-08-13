@@ -63,13 +63,13 @@ const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
             setLoading(false);
           }}
         />
-        <Button
+        {/* <Button
           type="leanPrimary"
           text="Editar"
           textStyle={buttonFontStyle}
           buttonStyle={buttonStyle}
           onPress={onEdit}
-        />
+        /> */}
       </Footer>
     </Container>
   );

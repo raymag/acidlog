@@ -11,7 +11,7 @@ export type LogType = {
 const getLogs = async (): Promise<LogType[] | undefined> => {
   try {
     const jsonValue = await AsyncStorage.getItem('@logs');
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
+    return jsonValue != null ? JSON.parse(jsonValue).reverse() : null;
   } catch (e) {
     console.error(`Error when trying fetch list of logs`);
   }

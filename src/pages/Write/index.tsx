@@ -74,7 +74,7 @@ const Write = () => {
                 highlight: date.getDate().toString(),
                 id: uuid.v4().toString(),
               } as LogType);
-              navigate('Home');
+              navigate('Home', {shouldRefresh: true});
             }}
             buttonStyle={buttonStyle}
           />
