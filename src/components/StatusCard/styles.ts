@@ -31,6 +31,7 @@ export const Body = styled.View`
 export const ProfileImage = styled.View`
   width: 100px;
   height: 100px;
+  max-width: 40%;
   background: ${(props: themeType) => props.theme.colors.dark};
   border-radius: 75px;
   border: solid 3px ${(props: themeType) => props.theme.colors.primary};
@@ -38,7 +39,7 @@ export const ProfileImage = styled.View`
 export const Message = styled.View`
   margin-left: 20px;
   word-wrap: break-word;
-  width: 100%;
+  width: 60%;
 `;
 export const TitleMessage = styled.Text`
   color: ${(props: themeType) => props.theme.colors.primary};

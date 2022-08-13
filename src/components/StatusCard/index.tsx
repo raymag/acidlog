@@ -24,7 +24,10 @@ const StatusCard = () => {
         <ProfileImage />
         <Message>
           <TitleMessage>Hello, Magno</TitleMessage>
-          <TextMessage>Você adicionou 16 logs neste mês</TextMessage>
+          <TextMessage>
+            Você adicionou 16 logs neste mês. Você adicionou 16 logs neste mês.
+            Você adicionou 16 logs neste mês
+          </TextMessage>
         </Message>
       </Body>
       <Footer>
