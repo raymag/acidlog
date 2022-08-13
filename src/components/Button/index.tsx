@@ -12,13 +12,21 @@ type ButtonProps = {
     | 'accent'
     | 'leanAccent';
   onPress?: () => void;
+  buttonStyle?: any;
+  textStyle?: any;
 };
 
 type StyleProps = {
   pressed: boolean;
 };
 
-const Button = ({text, type, onPress}: ButtonProps) => {
+const Button = ({
+  text,
+  type,
+  onPress,
+  buttonStyle = {},
+  textStyle = {},
+}: ButtonProps) => {
   const theme = useTheme();
   const Colors = {
     primary: {
@@ -70,9 +78,12 @@ const Button = ({text, type, onPress}: ButtonProps) => {
           translateY: pressed ? 2 : 0,
           borderColor: borderColor,
         },
+        buttonStyle,
       ]}
       onPress={onPress ? onPress : () => console.log(text)}>
-      <Text color={textColor}>{text}</Text>
+      <Text color={textColor} style={[textStyle]}>
+        {text}
+      </Text>
     </BaseButton>
   );
 };

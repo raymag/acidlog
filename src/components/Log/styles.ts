@@ -1,6 +1,7 @@
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import {themeType} from '../../global/theme';
+import Button from '../Button';
 
 export const Container = styled.View`
   margin-top: 25px;
@@ -47,12 +48,10 @@ export const Footer = styled.View`
   justify-content: flex-end;
   flex-direction: row;
 `;
-export const SmallButton = styled.Text`
-  background: ${(props: themeType) => props.theme.colors.dark};
-  padding: 3px 5px;
-  color: ${(props: themeType) => props.theme.colors.primary};
+export const SmallButton = styled(Button)`
+  padding: 2px 5px;
   font-weight: regular;
-  font-size: ${RFValue(12)}px;
+  font-size: ${RFValue(10)}px;
   margin-left: 15px;
   text-transform: uppercase;
 `;

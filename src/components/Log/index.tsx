@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../Button';
 import {
   Container,
   Body,
@@ -7,7 +8,6 @@ import {
   Title,
   Content,
   Footer,
-  SmallButton,
   Highlight,
   HighlightText,
 } from './styles';
@@ -17,6 +17,20 @@ type logTypes = {
   content: string;
   highlight: string;
 };
+
+const buttonStyle = {
+  paddingLeft: 5,
+  paddingRight: 5,
+  paddingTop: 2,
+  paddingBottom: 2,
+  borderWidth: 1,
+  marginLeft: 5,
+};
+const buttonFontStyle = {
+  fontSize: 12,
+  padding: 0,
+};
+
 const Log = ({title, content, highlight}: logTypes) => {
   return (
     <Container>
@@ -32,8 +46,18 @@ const Log = ({title, content, highlight}: logTypes) => {
         </RightSide>
       </Body>
       <Footer>
-        <SmallButton>Apagar</SmallButton>
-        <SmallButton>Editar</SmallButton>
+        <Button
+          type="leanAccent"
+          text="Apagar"
+          textStyle={buttonFontStyle}
+          buttonStyle={buttonStyle}
+        />
+        <Button
+          type="leanPrimary"
+          text="Editar"
+          textStyle={buttonFontStyle}
+          buttonStyle={buttonStyle}
+        />
       </Footer>
     </Container>
   );
