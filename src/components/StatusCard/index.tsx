@@ -1,4 +1,5 @@
 import React from 'react';
+import {LogType} from '../../services/log';
 import {
   Container,
   Title,
@@ -13,12 +14,46 @@ import {
   FooterText,
 } from './styles';
 
-const StatusCard = () => {
+type StatusCardProps = {
+  logs: LogType[];
+};
+
+const StatusCard = ({logs}: StatusCardProps) => {
+  const days = [
+    'Domingo',
+    'Segunda',
+    'Terça',
+    'Quarta',
+    'Quinta',
+    'Sexta',
+    'Sábado',
+  ];
+  const months = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+  ];
+  const date = new Date();
+  const title = `${date.getDate()} de ${
+    months[date.getMonth()]
+  } de ${date.getFullYear()}`;
+  const subtitle = `${
+    days[date.getDay()]
+  }, ${date.getHours()}:${date.getMinutes()}`;
   return (
     <Container>
       <Header>
-        <Title>8 de Agosto de 2022</Title>
-        <Subtitle>Sexta Feira</Subtitle>
+        <Title>{title}</Title>
+        <Subtitle>{subtitle}</Subtitle>
       </Header>
       <Body>
         <ProfileImage
@@ -27,15 +62,15 @@ const StatusCard = () => {
           }}
         />
         <Message>
-          <TitleMessage>Hello, Magno</TitleMessage>
+          <TitleMessage>Eaí!</TitleMessage>
           <TextMessage>
-            Você adicionou 16 logs neste mês. Você adicionou 16 logs neste mês.
-            Você adicionou 16 logs neste mês
+            Você já adicionou {logs.length} log{logs.length > 1 ? 's' : ''} no
+            total. Parabéns!
           </TextMessage>
         </Message>
       </Body>
       <Footer>
-        <FooterText>1503 logs em 2022</FooterText>
+        <FooterText></FooterText>
       </Footer>
     </Container>
   );

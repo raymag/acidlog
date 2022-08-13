@@ -30,7 +30,7 @@ const Home = () => {
       <Navbar title="ACID LOG" />
       <ScrollView>
         <Content>
-          <StatusCard />
+          <StatusCard logs={logs} />
           <Button
             text="Novo log"
             type="primary"
