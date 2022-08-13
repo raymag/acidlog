@@ -11,7 +11,7 @@ type ButtonProps = {
     | 'leanDark'
     | 'accent'
     | 'leanAccent';
-  onPress?: () => void;
+  onPress?: any;
   buttonStyle?: any;
   textStyle?: any;
 };

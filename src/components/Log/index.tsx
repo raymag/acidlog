@@ -16,6 +16,9 @@ type logTypes = {
   title: string;
   content: string;
   highlight: string;
+  onDelete?: any;
+  onEdit?: any;
+  id: string;
 };
 
 const buttonStyle = {
@@ -33,7 +36,7 @@ const buttonFontStyle = {
   padding: 0,
 };
 
-const Log = ({title, content, highlight}: logTypes) => {
+const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
   return (
     <Container>
       <Body>
@@ -53,12 +56,14 @@ const Log = ({title, content, highlight}: logTypes) => {
           text="Apagar"
           textStyle={buttonFontStyle}
           buttonStyle={buttonStyle}
+          onPress={() => onDelete(id)}
         />
         <Button
           type="leanPrimary"
           text="Editar"
           textStyle={buttonFontStyle}
           buttonStyle={buttonStyle}
+          onPress={onEdit}
         />
       </Footer>
     </Container>
