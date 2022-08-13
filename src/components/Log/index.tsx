@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '../Button';
 import {
   Container,
@@ -37,8 +37,9 @@ const buttonFontStyle = {
 };
 
 const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
+  const [loading, setLoading] = useState(false);
   return (
-    <Container>
+    <Container style={{opacity: loading ? 0.2 : 1}}>
       <Body>
         <LeftSide>
           <Highlight>
@@ -56,7 +57,11 @@ const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
           text="Apagar"
           textStyle={buttonFontStyle}
           buttonStyle={buttonStyle}
-          onPress={() => onDelete(id)}
+          onPress={() => {
+            setLoading(true);
+            onDelete(id);
+            setLoading(false);
+          }}
         />
         <Button
           type="leanPrimary"

@@ -1,16 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Container, Content} from './styles';
 import {ScrollView} from 'react-native';
 import Navbar from '../../components/Navbar';
 import StatusCard from '../../components/StatusCard';
 import Button from '../../components/Button';
 import Log from '../../components/Log';
+import logService, {LogType} from '../../services/log';
 
 import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
-  const [logs, setLogs] = useState([...Array(5).keys()]);
+  const [refresh, setRefresh] = useState(true);
+  const [logs, setLogs] = useState<LogType[]>([]);
   const {navigate} = useNavigation<any>();
+
+  const fetch = () => {
+    logService.getLogs().then(storedLogs => {
+      if (storedLogs && storedLogs != null) {
+        setLogs(storedLogs);
+      }
+    });
+  };
+  useEffect(() => {
+    fetch();
+  }, [refresh]);
+
   return (
     <Container>
       <Navbar title="ACID LOG" />
@@ -22,19 +36,24 @@ const Home = () => {
             type="primary"
             onPress={() => navigate('Write')}
           />
+          <Button
+            text="Refresh"
+            type="leanPrimary"
+            onPress={() => setRefresh(!refresh)}
+          />
 
-          {logs.map(i => (
+          {logs.map((log, i) => (
             <Log
-              title="5 de Agosto"
-              content="So this morning something real crazy happened with me, you aren’t going to
-believ..."
-              highlight="5"
+              title={log.title}
               key={i}
-              id={i.toString()}
-              onDelete={(id: string) => {
-                const temp = [...logs];
-                console.log(logs, id);
-                setLogs(temp.filter(log => log.toString() !== id));
+              content={log.content}
+              highlight={log.highlight}
+              id={log.id}
+              onDelete={async (id: string) => {
+                const newLogs = await logService.deleteLog(id);
+                if (newLogs && newLogs !== null) {
+                  setLogs(newLogs);
+                }
               }}
               onEdit={() => navigate('Write')}
             />
