@@ -16,10 +16,14 @@ export const Title = styled.Text`
   color: ${(props: themeType) => props.theme.colors.primary};
   font-weight: bold;
 `;
-export const Hamburger = styled.View``;
+export const Hamburger = styled.Pressable`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 25px;
+`;
 export const HamburgerIconLine = styled.View`
   width: 40px;
   height: 5px;
-  background: ${(props: themeType) => props.theme.colors.primary};
-  margin: 3px 0;
+  background: ${(props: themeType) => props.theme.colors.dark};
 `;
