@@ -10,6 +10,8 @@ export const Bar = styled.View`
   align-items: center;
   flex-direction: row;
   min-height: 60px;
+  border: 1px solid transparent;
+  border-bottom-color: ${(props: themeType) => props.theme.colors.darkWatered};
 `;
 export const Title = styled.Text`
   font-size: ${RFValue(16)}px;
