@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import Navbar from '../../components/Navbar';
 import Button from '../../components/Button';
+import {useModal, Modal} from '../../hooks/Modal';
 import profileService from '../../services/profile';
 import logService from '../../services/log';
 import {useNavigation} from '@react-navigation/native';
@@ -20,6 +21,7 @@ const Settings = () => {
   const [name, setName] = useState<string>('');
   const [nameError, setNameError] = useState<boolean>(false);
   const {navigate} = useNavigation<any>();
+  const {isModalVisible, toggleModal} = useModal();
 
   const submitName = async () => {
     if (name.length === 0) {
@@ -57,6 +59,13 @@ const Settings = () => {
 
   return (
     <SafeAreaView>
+      <Modal
+        isModalVisible={isModalVisible}
+        title="Limpar todos os dados?"
+        body="Esta ação não pode ser revertida."
+        onCancel={() => toggleModal()}
+        onConfirm={clearData}
+      />
       <Container>
         <Navbar title="ACID LOG" withCloseIcon />
         <ScrollView>
@@ -91,7 +100,7 @@ const Settings = () => {
               <Button
                 text="Limpar Dados"
                 type="leanPrimary"
-                onPress={clearData}
+                onPress={() => toggleModal()}
               />
             </Card>
           </Body>
