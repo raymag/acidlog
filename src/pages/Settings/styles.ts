@@ -20,6 +20,8 @@ export const PageTitle = styled.Text`
 
 export const Body = styled.View`
   padding: 10px;
+  padding-bottom: 200px;
+  min-height: 100%;
 `;
 
 export const Card = styled.View`

@@ -8,7 +8,7 @@ const useModal = () => {
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
-  return {isModalVisible, toggleModal};
+  return [isModalVisible, toggleModal] as const;
 };
 
 type ModalBoxProps = {
