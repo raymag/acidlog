@@ -43,6 +43,7 @@ export const Input = styled.TextInput`
     color: ${(props: themeType) => props.theme.colors.white}
     background: ${(props: themeType) => props.theme.colors.grayish};
     margin-top: 5px;
+    padding: 2px 10px;
     font-size: ${RFValue(14)}px;
     font-family: ${(props: themeType) => props.theme.fonts.content};
 `;

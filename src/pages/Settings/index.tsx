@@ -17,6 +17,7 @@ import {
   Input,
   Alert,
 } from './styles';
+import settingsService from '../../services/settings';
 
 const Settings = () => {
   const [name, setName] = useState<string>('');
@@ -48,6 +49,7 @@ const Settings = () => {
     try {
       await profileService.deleteProfile();
       await logService.deleteAllData();
+      await settingsService.deleteSettings();
       navigate('Home', {refresh: true});
     } catch (error) {
       console.log(error);
