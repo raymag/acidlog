@@ -28,7 +28,7 @@ export const LogTextArea = styled.TextInput`
   border-radius: 5px;
 `;
 export const Wrapper = styled.View`
-  padding: 20px 15px;
+  padding: 25px 15px;
   height: 92%;
   display: flex;
   justify-content: space-between;

@@ -41,7 +41,8 @@ const buttonFontStyle = {
 const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
   const [loading, setLoading] = useState(false);
   const {navigate} = useNavigation<any>();
-  const summary = content.slice(0, 50).trim() + '...';
+  const summary =
+    content.length > 100 ? content.slice(0, 100).trim() + '...' : content;
   return (
     <Container style={{opacity: loading ? 0.2 : 1}}>
       <Body>
