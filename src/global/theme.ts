@@ -10,7 +10,8 @@ export default {
     white: '#fff',
   },
   fonts: {
-    content: 'roboto',
+    content: 'monospace',
+    title: 'roboto',
   },
 };
 
@@ -28,6 +29,7 @@ export type themeType = {
     };
     fonts: {
       content: string;
+      title: string;
     };
   };
 };

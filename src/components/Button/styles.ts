@@ -5,6 +5,7 @@ import {themeType} from '../../global/theme';
 export const Text = styled.Text`
   font-weight: bold;
   font-size: ${RFValue(20)}px;
+  font-family: ${(props: themeType) => props.theme.fonts.title}
   text-transform: uppercase;
   color: ${(props: any) => props.color};
 `;

@@ -51,6 +51,7 @@ const Home = () => {
                 }
               }}
               onEdit={() => navigate('Write')}
+              light={i % 2 !== 0}
             />
           ))}
         </Content>

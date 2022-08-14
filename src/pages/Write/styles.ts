@@ -11,6 +11,7 @@ export const Title = styled.Text`
   color: ${(props: themeType) => props.theme.colors.primary};
   font-weight: bold;
   text-transform: uppercase;
+  font-family: ${(props: themeType) => props.theme.fonts.title};
 `;
 export const Subtitle = styled.Text`
   font-size: ${RFValue(14)}px;
@@ -18,6 +19,7 @@ export const Subtitle = styled.Text`
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 20px;
+  font-family: ${(props: themeType) => props.theme.fonts.title};
 `;
 export const LogTextArea = styled.TextInput`
   margin-top: 20px;
@@ -26,6 +28,7 @@ export const LogTextArea = styled.TextInput`
   text-align-vertical: top;
   max-height: 70%;
   border-radius: 5px;
+  font-family: ${(props: themeType) => props.theme.fonts.content};
 `;
 export const Wrapper = styled.View`
   padding: 20px 15px;

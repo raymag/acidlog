@@ -15,6 +15,7 @@ export const Title = styled.Text`
   font-size: ${RFValue(16)}px;
   color: ${(props: themeType) => props.theme.colors.primary};
   font-weight: bold;
+  font-family: ${(props: themeType) => props.theme.fonts.title};
 `;
 export const Hamburger = styled.Pressable`
   display: flex;

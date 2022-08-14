@@ -11,11 +11,13 @@ export const Title = styled.Text`
   color: ${(props: themeType) => props.theme.colors.primary};
   font-size: ${RFValue(20)}px;
   font-weight: bold;
+  font-family: ${(props: themeType) => props.theme.fonts.title};
 `;
 export const Subtitle = styled.Text`
   color: ${(props: themeType) => props.theme.colors.primaryWatered};
   font-size: ${RFValue(16)}px;
   font-weight: bold;
+  font-family: ${(props: themeType) => props.theme.fonts.title};
 `;
 export const Header = styled.View`
   margin-bottom: 20px;
@@ -45,11 +47,13 @@ export const TitleMessage = styled.Text`
   color: ${(props: themeType) => props.theme.colors.primary};
   font-size: ${RFValue(16)}px;
   font-weight: bold;
+  font-family: ${(props: themeType) => props.theme.fonts.title};
 `;
 export const TextMessage = styled.Text`
   color: ${(props: themeType) => props.theme.colors.primary};
   font-size: ${RFValue(14)}px;
   font-weight: bold;
+  font-family: ${(props: themeType) => props.theme.fonts.content};
 `;
 export const Footer = styled.View`
   display: flex;
@@ -60,4 +64,5 @@ export const FooterText = styled.Text`
   color: ${(props: themeType) => props.theme.colors.primaryWatered};
   font-size: ${RFValue(12)}px;
   font-weight: bold;
+  font-family: ${(props: themeType) => props.theme.fonts.content};
 `;

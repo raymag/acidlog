@@ -20,6 +20,7 @@ type logTypes = {
   onDelete?: any;
   onEdit?: any;
   id: string;
+  light?: boolean;
 };
 
 const buttonStyle = {
@@ -38,13 +39,21 @@ const buttonFontStyle = {
   padding: 0,
 };
 
-const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
+const Log = ({
+  title,
+  content,
+  highlight,
+  onDelete,
+  onEdit,
+  id,
+  light,
+}: logTypes) => {
   const [loading, setLoading] = useState(false);
   const {navigate} = useNavigation<any>();
   const summary =
     content.length > 100 ? content.slice(0, 100).trim() + '...' : content;
   return (
-    <Container style={{opacity: loading ? 0.2 : 1}}>
+    <Container style={{opacity: loading ? 0.2 : 1}} light={light}>
       <Body>
         <LeftSide>
           <Highlight>
@@ -53,12 +62,12 @@ const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
         </LeftSide>
         <RightSide>
           <Title>{title}</Title>
-          <Content>{summary}</Content>
+          <Content light={light}>{summary}</Content>
         </RightSide>
       </Body>
       <Footer>
         <Button
-          type="leanAccent"
+          type={light ? 'accent' : 'leanAccent'}
           text="Apagar"
           textStyle={buttonFontStyle}
           buttonStyle={buttonStyle}
@@ -76,7 +85,7 @@ const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
           onPress={onEdit}
         /> */}
         <Button
-          type="primary"
+          type={light ? 'dark' : 'leanPrimary'}
           text="Ver"
           textStyle={buttonFontStyle}
           buttonStyle={buttonStyle}
