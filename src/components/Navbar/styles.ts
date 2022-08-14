@@ -28,3 +28,22 @@ export const HamburgerIconLine = styled.View`
   height: 5px;
   background: ${(props: themeType) => props.theme.colors.dark};
 `;
+export const Cross = styled.Pressable`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  position: relative;
+  width: 40px;
+  height: 40px;
+`;
+export const CrossLine = styled.View`
+  width: 35px;
+  height: 5px;
+  background: ${(props: any) =>
+    props.pressed
+      ? props.theme.colors.primaryWatered
+      : props.theme.colors.primary};
+  transform: rotate(${(props: any) => (props.reversed ? '-' : '')}45deg);
+  position: absolute;
+`;
