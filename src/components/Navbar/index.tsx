@@ -9,6 +9,7 @@ import {
 } from './styles';
 import {useTheme} from 'styled-components';
 import {useNavigation} from '@react-navigation/native';
+import {Pressable} from 'react-native';
 
 type NavbarProps = {
   title: string;
@@ -20,7 +21,9 @@ const Navbar = ({title, withCloseIcon = false}: NavbarProps) => {
   const theme = useTheme();
   return (
     <Bar>
-      <Title>{title}</Title>
+      <Pressable onPress={() => navigate('Home', {refresh: true})}>
+        <Title>{title}</Title>
+      </Pressable>
 
       {withCloseIcon ? (
         <Cross
