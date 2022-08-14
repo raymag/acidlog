@@ -6,12 +6,23 @@ export type LogType = {
   subtitle: string;
   content: string;
   highlight: string;
+  createdAt: string;
 };
 
 const getLogs = async (): Promise<LogType[] | undefined> => {
   try {
     const jsonValue = await AsyncStorage.getItem('@logs');
-    return jsonValue != null ? JSON.parse(jsonValue).reverse() : null;
+    return jsonValue != null
+      ? JSON.parse(jsonValue).sort((a: LogType, b: LogType) => {
+          if (a.createdAt < b.createdAt) {
+            return 1;
+          } else if (a.createdAt > b.createdAt) {
+            return -1;
+          } else {
+            return 0;
+          }
+        })
+      : null;
   } catch (e) {
     console.error(`Error when trying fetch list of logs`);
   }
@@ -23,12 +34,11 @@ const getLog = async (id: string): Promise<LogType | void> => {
     if (logs && logs !== null) {
       logs.forEach(log => {
         if (log.id == id) {
-          console.log(log.id == id, log);
           return log;
         }
       });
     }
-    // return;
+    return;
   } catch (e) {
     console.error(`Error when trying fetch list of logs`);
   }
@@ -36,7 +46,6 @@ const getLog = async (id: string): Promise<LogType | void> => {
 
 const storeLogs = async (logs: LogType[]): Promise<void> => {
   try {
-    console.log(logs);
     const jsonValue = JSON.stringify(logs);
     await AsyncStorage.setItem('@logs', jsonValue);
   } catch (e) {

@@ -73,6 +73,7 @@ const Write = () => {
                 content,
                 highlight: date.getDate().toString(),
                 id: uuid.v4().toString(),
+                createdAt: date.getTime().toString(),
               } as LogType);
               navigate('Home', {shouldRefresh: true});
             }}
