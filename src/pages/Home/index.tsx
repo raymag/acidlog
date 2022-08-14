@@ -8,22 +8,35 @@ import Log from '../../components/Log';
 import logService, {LogType} from '../../services/log';
 
 import {useNavigation, useRoute} from '@react-navigation/native';
+import profileService, {ProfileType} from '../../services/profile';
 
 const Home = () => {
   const route = useRoute();
   const [logs, setLogs] = useState<LogType[]>([]);
   const [logCount, setLogCount] = useState<number | null>(null);
+  const [profile, setProfile] = useState<ProfileType | null>(null);
   const {navigate} = useNavigation<any>();
 
   const fetch = () => {
     logService.getLogs().then(storedLogs => {
       if (storedLogs && storedLogs != null) {
         setLogs(storedLogs);
+      } else {
+        setLogs([]);
       }
     });
     logService.getTotalLogCount().then(count => {
       if (count && count !== null) {
         setLogCount(count);
+      } else {
+        setLogCount(0);
+      }
+    });
+    profileService.getProfile().then(prof => {
+      if (prof && prof !== null) {
+        setProfile(prof);
+      } else {
+        setProfile(null);
       }
     });
   };
@@ -36,7 +49,7 @@ const Home = () => {
       <Navbar title="ACID LOG" />
       <ScrollView>
         <Content>
-          <StatusCard logs={logs} logCount={logCount} />
+          <StatusCard logs={logs} logCount={logCount} profile={profile} />
           <Button
             text="Novo log"
             type="primary"

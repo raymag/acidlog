@@ -1,5 +1,6 @@
 import React from 'react';
 import {LogType} from '../../services/log';
+import {ProfileType} from '../../services/profile';
 import {
   Container,
   Title,
@@ -17,9 +18,10 @@ import {
 type StatusCardProps = {
   logs: LogType[];
   logCount?: number | null;
+  profile?: ProfileType | null;
 };
 
-const StatusCard = ({logs, logCount}: StatusCardProps) => {
+const StatusCard = ({logs, logCount, profile = null}: StatusCardProps) => {
   const days = [
     'Domingo',
     'Segunda',
@@ -64,9 +66,11 @@ const StatusCard = ({logs, logCount}: StatusCardProps) => {
           }}
         />
         <Message>
-          <TitleMessage>Eaí!</TitleMessage>
+          <TitleMessage>
+            {profile && profile.name ? `Eaí, ${profile.name}!` : 'Eaí'}
+          </TitleMessage>
           <TextMessage>
-            Você já possui {logs.length} log{logs.length > 1 ? 's' : ''} no
+            Você já possui {logs.length} log{logs.length !== 1 ? 's' : ''} no
             salvos no momento. Parabéns!
           </TextMessage>
         </Message>
@@ -74,9 +78,9 @@ const StatusCard = ({logs, logCount}: StatusCardProps) => {
       <Footer>
         <FooterText>
           {logCount && logCount !== null
-            ? `${logCount} log${
-                logCount && logCount !== null ? 's' : ''
-              } escritos`
+            ? `${logCount} log${logCount !== 1 ? 's' : ''} escrito${
+                logCount !== 1 ? 's' : ''
+              }`
             : ''}
         </FooterText>
       </Footer>

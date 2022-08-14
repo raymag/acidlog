@@ -117,6 +117,15 @@ const decreaseTotalLogCount = async (): Promise<void> => {
   }
 };
 
+const deleteAllData = async (): Promise<void> => {
+  try {
+    await AsyncStorage.removeItem('@logs');
+    await AsyncStorage.removeItem('@logCount');
+  } catch (error) {
+    console.error('Error when trying to delete all log data');
+  }
+};
+
 const logService = {
   getLogs,
   getLog,
@@ -127,5 +136,6 @@ const logService = {
   putTotalLogCount,
   increaseTotalLogCount,
   decreaseTotalLogCount,
+  deleteAllData,
 };
 export default logService;
