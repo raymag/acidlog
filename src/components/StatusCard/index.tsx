@@ -70,7 +70,7 @@ const StatusCard = ({logs, logCount, profile = null}: StatusCardProps) => {
             {profile && profile.name ? `Eaí, ${profile.name}!` : 'Eaí'}
           </TitleMessage>
           <TextMessage>
-            Você já possui {logs.length} log{logs.length !== 1 ? 's' : ''} no
+            Você já possui {logs.length} log{logs.length !== 1 ? 's' : ''}{' '}
             salvos no momento. Parabéns!
           </TextMessage>
         </Message>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Container, Content} from './styles';
-import {ScrollView} from 'react-native';
+import {FlatList, ScrollView} from 'react-native';
 import Navbar from '../../components/Navbar';
 import StatusCard from '../../components/StatusCard';
 import Button from '../../components/Button';
@@ -55,25 +55,32 @@ const Home = () => {
             type="primary"
             onPress={() => navigate('Write')}
           />
-
-          {logs.map((log, i) => (
-            <Log
-              title={log.title}
-              key={i}
-              content={log.content}
-              highlight={log.highlight}
-              id={log.id}
-              createdAt={log.createdAt}
-              onDelete={async (id: string) => {
-                const newLogs = await logService.deleteLog(id);
-                if (newLogs && newLogs !== null) {
-                  setLogs(newLogs);
-                }
-              }}
-              onEdit={() => navigate('Write')}
-              light={i % 2 !== 0}
-            />
-          ))}
+          <FlatList
+            data={logs}
+            renderItem={({item, index}) => {
+              const log = item;
+              const i = index;
+              return (
+                <Log
+                  title={log.title}
+                  content={log.content}
+                  highlight={log.highlight}
+                  id={log.id}
+                  createdAt={log.createdAt}
+                  onDelete={async (id: string) => {
+                    const newLogs = await logService.deleteLog(id);
+                    if (newLogs && newLogs !== null) {
+                      setLogs(newLogs);
+                    }
+                  }}
+                  onEdit={() => navigate('Write')}
+                  light={i % 2 !== 0}
+                />
+              );
+            }}
+            keyExtractor={item => item.id}
+            nestedScrollEnabled
+          />
         </Content>
       </ScrollView>
     </Container>

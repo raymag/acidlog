@@ -1,3 +1,5 @@
+import styled from 'styled-components/native';
+
 export const Veil = styled.View`
   position: absolute;
   top: 0;
