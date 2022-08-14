@@ -12,12 +12,18 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 const Home = () => {
   const route = useRoute();
   const [logs, setLogs] = useState<LogType[]>([]);
+  const [logCount, setLogCount] = useState<number | null>(null);
   const {navigate} = useNavigation<any>();
 
   const fetch = () => {
     logService.getLogs().then(storedLogs => {
       if (storedLogs && storedLogs != null) {
         setLogs(storedLogs);
+      }
+    });
+    logService.getTotalLogCount().then(count => {
+      if (count && count !== null) {
+        setLogCount(count);
       }
     });
   };
@@ -30,7 +36,7 @@ const Home = () => {
       <Navbar title="ACID LOG" />
       <ScrollView>
         <Content>
-          <StatusCard logs={logs} />
+          <StatusCard logs={logs} logCount={logCount} />
           <Button
             text="Novo log"
             type="primary"

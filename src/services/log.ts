@@ -64,6 +64,7 @@ const storeLog = async (log: LogType): Promise<void> => {
     } else {
       await storeLogs([log]);
     }
+    await increaseTotalLogCount();
   } catch (e) {
     console.error(`Error when trying to store Log with id ${log.id}`);
     return;
@@ -77,11 +78,42 @@ const deleteLog = async (id: string): Promise<LogType[] | undefined> => {
     if (logs && logs != null) {
       const newLogs = logs.filter(log => log.id !== id);
       await storeLogs(newLogs);
+      await decreaseTotalLogCount();
       return newLogs;
     }
   } catch {
     console.error(`Error when trying to delete Log with id ${id}`);
     return;
+  }
+};
+
+const getTotalLogCount = async (): Promise<number> => {
+  try {
+    const count = await AsyncStorage.getItem('@logCount');
+    return count != null ? parseInt(count) : 0;
+  } catch {
+    console.error(`Error when trying to get total log count`);
+    return 0;
+  }
+};
+
+const putTotalLogCount = async (count: number): Promise<void> => {
+  try {
+    await AsyncStorage.setItem('@logCount', count.toString());
+  } catch (e) {
+    console.error(`Error when trying to store new list of logs`);
+    return;
+  }
+};
+
+const increaseTotalLogCount = async (): Promise<void> => {
+  const count = await getTotalLogCount();
+  await putTotalLogCount(count + 1);
+};
+const decreaseTotalLogCount = async (): Promise<void> => {
+  const count = await getTotalLogCount();
+  if (count > 0) {
+    await putTotalLogCount(count - 1);
   }
 };
 
@@ -91,5 +123,9 @@ const logService = {
   storeLog,
   storeLogs,
   deleteLog,
+  getTotalLogCount,
+  putTotalLogCount,
+  increaseTotalLogCount,
+  decreaseTotalLogCount,
 };
 export default logService;

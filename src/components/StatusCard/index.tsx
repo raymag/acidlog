@@ -16,9 +16,10 @@ import {
 
 type StatusCardProps = {
   logs: LogType[];
+  logCount?: number | null;
 };
 
-const StatusCard = ({logs}: StatusCardProps) => {
+const StatusCard = ({logs, logCount}: StatusCardProps) => {
   const days = [
     'Domingo',
     'Segunda',
@@ -49,6 +50,7 @@ const StatusCard = ({logs}: StatusCardProps) => {
   const subtitle = `${
     days[date.getDay()]
   }, ${date.getHours()}:${date.getMinutes()}`;
+
   return (
     <Container>
       <Header>
@@ -64,13 +66,19 @@ const StatusCard = ({logs}: StatusCardProps) => {
         <Message>
           <TitleMessage>Eaí!</TitleMessage>
           <TextMessage>
-            Você já adicionou {logs.length} log{logs.length > 1 ? 's' : ''} no
-            total. Parabéns!
+            Você já possui {logs.length} log{logs.length > 1 ? 's' : ''} no
+            salvos no momento. Parabéns!
           </TextMessage>
         </Message>
       </Body>
       <Footer>
-        <FooterText></FooterText>
+        <FooterText>
+          {logCount && logCount !== null
+            ? `${logCount} log${
+                logCount && logCount !== null ? 's' : ''
+              } escritos`
+            : ''}
+        </FooterText>
       </Footer>
     </Container>
   );
