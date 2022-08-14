@@ -35,3 +35,10 @@ export const Wrapper = styled.View`
 `;
 
 export const Box = styled.View``;
+export const ContentViewer = styled.Text`
+  background: ${(props: themeType) => props.theme.colors.dark};
+  color: ${(props: themeType) => props.theme.colors.white};
+  font-size: ${RFValue(16)}px;
+  padding: 10px;
+  border-radius: 5px;
+`;

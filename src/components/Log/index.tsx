@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Button from '../Button';
+import {useNavigation} from '@react-navigation/native';
 import {
   Container,
   Body,
@@ -30,6 +31,7 @@ const buttonStyle = {
   marginLeft: 5,
   marginTop: 0,
   marginBottom: 0,
+  minWidth: 60,
 };
 const buttonFontStyle = {
   fontSize: 12,
@@ -38,6 +40,8 @@ const buttonFontStyle = {
 
 const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
   const [loading, setLoading] = useState(false);
+  const {navigate} = useNavigation<any>();
+  const summary = content.slice(0, 50).trim() + '...';
   return (
     <Container style={{opacity: loading ? 0.2 : 1}}>
       <Body>
@@ -48,7 +52,7 @@ const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
         </LeftSide>
         <RightSide>
           <Title>{title}</Title>
-          <Content>{content}</Content>
+          <Content>{summary}</Content>
         </RightSide>
       </Body>
       <Footer>
@@ -70,6 +74,13 @@ const Log = ({title, content, highlight, onDelete, onEdit, id}: logTypes) => {
           buttonStyle={buttonStyle}
           onPress={onEdit}
         /> */}
+        <Button
+          type="primary"
+          text="Ver"
+          textStyle={buttonFontStyle}
+          buttonStyle={buttonStyle}
+          onPress={() => navigate('Read', {id})}
+        />
       </Footer>
     </Container>
   );

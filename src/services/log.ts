@@ -17,6 +17,23 @@ const getLogs = async (): Promise<LogType[] | undefined> => {
   }
 };
 
+const getLog = async (id: string): Promise<LogType | void> => {
+  try {
+    const logs = await getLogs();
+    if (logs && logs !== null) {
+      logs.forEach(log => {
+        if (log.id == id) {
+          console.log(log.id == id, log);
+          return log;
+        }
+      });
+    }
+    // return;
+  } catch (e) {
+    console.error(`Error when trying fetch list of logs`);
+  }
+};
+
 const storeLogs = async (logs: LogType[]): Promise<void> => {
   try {
     console.log(logs);
@@ -61,6 +78,7 @@ const deleteLog = async (id: string): Promise<LogType[] | undefined> => {
 
 const logService = {
   getLogs,
+  getLog,
   storeLog,
   storeLogs,
   deleteLog,
