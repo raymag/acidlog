@@ -44,6 +44,7 @@ const Home = () => {
               content={log.content}
               highlight={log.highlight}
               id={log.id}
+              createdAt={log.createdAt}
               onDelete={async (id: string) => {
                 const newLogs = await logService.deleteLog(id);
                 if (newLogs && newLogs !== null) {

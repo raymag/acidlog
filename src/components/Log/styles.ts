@@ -15,13 +15,14 @@ export const Container = styled.View`
   border-top-color: ${(props: themeType) => props.theme.colors.dark};
   background: ${(props: ContainerProps) =>
     props.light ? props.theme.colors.primary : props.theme.colors.dark};
+  position: relative;
 `;
 export const Body = styled.View`
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  padding: 10px 0;
+  padding: 20px 0;
 `;
 export const LeftSide = styled.View`
   width: 25%;
@@ -84,4 +85,21 @@ export const HighlightText = styled.Text`
   font-weight: bold;
   font-family: ${(props: themeType) => props.theme.fonts.title};
   color: ${(props: themeType) => props.theme.colors.primary};
+`;
+
+export const Time = styled.Text`
+  position: absolute;
+  color: ${(props: ContainerProps) =>
+    props.light
+      ? props.theme.colors.darkWatered
+      : props.theme.colors.primaryWatered};
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 10px;
+  font-family: ${(props: themeType) => props.theme.fonts.content};
+  font-size: ${RFValue(12)}px;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0.8;
 `;

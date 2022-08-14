@@ -11,6 +11,7 @@ import {
   Footer,
   Highlight,
   HighlightText,
+  Time,
 } from './styles';
 
 type logTypes = {
@@ -21,6 +22,7 @@ type logTypes = {
   onEdit?: any;
   id: string;
   light?: boolean;
+  createdAt: string;
 };
 
 const buttonStyle = {
@@ -47,13 +49,22 @@ const Log = ({
   onEdit,
   id,
   light,
+  createdAt,
 }: logTypes) => {
   const [loading, setLoading] = useState(false);
   const {navigate} = useNavigation<any>();
   const summary =
     content.length > 100 ? content.slice(0, 100).trim() + '...' : content;
+  const date = new Date(parseInt(createdAt));
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
   return (
     <Container style={{opacity: loading ? 0.2 : 1}} light={light}>
+      <Time light={light}>
+        {hours.toString().length === 1 ? '0' + hours.toString() : hours}:
+        {minutes.toString().length === 1 ? '0' + minutes.toString() : minutes}
+      </Time>
       <Body>
         <LeftSide>
           <Highlight>
