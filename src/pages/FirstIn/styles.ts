@@ -14,6 +14,7 @@ export const Container = styled.View`
   width: 90%;
   background: ${(props: themeType) => props.theme.colors.dark};
   border-radius: 5px;
+  margin: 20px 0;
 `;
 export const Title = styled.Text`
   padding: 2px 15px;

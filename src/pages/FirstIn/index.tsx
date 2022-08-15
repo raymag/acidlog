@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Alert as Warning} from 'react-native';
+import {Alert as Warning, ScrollView} from 'react-native';
 import {JSHash, CONSTANTS} from 'react-native-hash';
 
 import Button from '../../components/Button';
@@ -65,9 +65,9 @@ const FirstIn = () => {
   };
 
   return (
-    <SafeAreaView>
-      <Veil>
-        <Container>
+    <Veil>
+      <Container>
+        <ScrollView>
           <Title>Bem vindo ao AcidLog</Title>
 
           <Text>
@@ -84,6 +84,7 @@ const FirstIn = () => {
             value={password}
             onChangeText={setPassword}
             placeholder="******"
+            placeholderTextColor="#ccc"
             secureTextEntry={true}
             alert={errors.password}
           />
@@ -94,15 +95,16 @@ const FirstIn = () => {
             value={password2}
             onChangeText={setPassword2}
             placeholder="******"
+            placeholderTextColor="#ccc"
             secureTextEntry={true}
             alert={errors.password2}
           />
           <Alert>{errors.password2}</Alert>
 
           <Button text="Confirmar" type="primary" onPress={handleSubmit} />
-        </Container>
-      </Veil>
-    </SafeAreaView>
+        </ScrollView>
+      </Container>
+    </Veil>
   );
 };
 
