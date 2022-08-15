@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView, Alert as Warning} from 'react-native';
 import Navbar from '../../components/Navbar';
 import Button from '../../components/Button';
 import {useModal, Modal} from '../../hooks/Modal';
 import profileService from '../../services/profile';
 import logService from '../../services/log';
 import {useNavigation} from '@react-navigation/native';
+import {JSHash, CONSTANTS} from 'react-native-hash';
 
 import {
   Container,
@@ -21,10 +22,18 @@ import settingsService from '../../services/settings';
 
 const Settings = () => {
   const [name, setName] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [password2, setPassword2] = useState<string>('');
+  const [actualPassword, setActualPassword] = useState<string>('');
+  const [passwordError, setPasswordError] = useState({
+    password: '',
+    password2: '',
+    actualPassword: '',
+  });
   const [nameError, setNameError] = useState<boolean>(false);
   const {navigate} = useNavigation<any>();
   const [isModalVisible, toggleModal] = useModal();
-  const [isExportModalVisible, toggleExportModal] = useModal();
+  // const [isExportModalVisible, toggleExportModal] = useModal();
 
   const submitName = async () => {
     if (name.length === 0) {
@@ -82,6 +91,52 @@ const Settings = () => {
   //   }
   // };
 
+  const handleUpdatePassword = async () => {
+    const err = {
+      password: '',
+      password2: '',
+      actualPassword: '',
+    };
+    if (password.trim() === '') {
+      err.password = 'A senha não pode ficar em branco';
+    }
+    if (password2.trim() === '') {
+      err.password2 = 'A senha não pode ficar em branco';
+    }
+    if (password !== password2) {
+      err.password = 'As senhas não conferem';
+      err.password2 = 'As senhas não conferem';
+    }
+
+    const conf = await settingsService.getSettings();
+    if (conf && conf.password) {
+      const oldHash = await JSHash(
+        actualPassword,
+        CONSTANTS.HashAlgorithms.sha256,
+      );
+      if (oldHash !== conf.password) {
+        err.actualPassword = 'Senha incorreta';
+      }
+    }
+
+    setPasswordError(err);
+    if (
+      err.password === '' &&
+      err.password2 === '' &&
+      err.actualPassword === ''
+    ) {
+      const newPass = await JSHash(password, CONSTANTS.HashAlgorithms.sha256);
+      if (newPass) {
+        await settingsService.putSettings({password: newPass});
+        Warning.alert('Sucesso!', 'Sua senha foi alterada corretamente.', [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
+        navigate('Home', {refresh: true});
+        return;
+      }
+    }
+  };
+
   useEffect(() => {
     fetchProfile();
     setName(name);
@@ -124,7 +179,55 @@ const Settings = () => {
               <Alert>
                 {nameError ? 'O nome não pode ficar em branco!' : ''}
               </Alert>
-              <Button text="Salvar" type="leanPrimary" onPress={submitName} />
+              <Button
+                text="Salvar"
+                type="leanPrimary"
+                onPress={submitName}
+                buttonStyle={{marginTop: 5}}
+              />
+            </Card>
+
+            <Card>
+              <CardTitle>Mudar senha</CardTitle>
+
+              <Text>Senha Atual</Text>
+              <Input
+                value={actualPassword}
+                onChangeText={setActualPassword}
+                placeholder="******"
+                placeholderTextColor="#ccc"
+                secureTextEntry={true}
+                alert={passwordError.actualPassword}
+              />
+              <Alert>{passwordError.actualPassword}</Alert>
+
+              <Text>Senha Nova</Text>
+              <Input
+                value={password}
+                onChangeText={setPassword}
+                placeholder="******"
+                placeholderTextColor="#ccc"
+                secureTextEntry={true}
+                alert={passwordError.password}
+              />
+              <Alert>{passwordError.password}</Alert>
+
+              <Text>Confirmar Senha</Text>
+              <Input
+                value={password2}
+                onChangeText={setPassword2}
+                placeholder="******"
+                placeholderTextColor="#ccc"
+                secureTextEntry={true}
+                alert={passwordError.password2}
+              />
+              <Alert>{passwordError.password2}</Alert>
+              <Button
+                text="Atualizar"
+                type="leanPrimary"
+                onPress={handleUpdatePassword}
+                buttonStyle={{marginTop: 5}}
+              />
             </Card>
 
             {/* <Card>
@@ -137,6 +240,7 @@ const Settings = () => {
                 text="Exportar"
                 type="leanPrimary"
                 onPress={() => toggleExportModal()}
+                buttonStyle={{marginTop: 5}}
               />
             </Card> */}
 
@@ -151,6 +255,7 @@ const Settings = () => {
                 text="Limpar Dados"
                 type="leanPrimary"
                 onPress={() => toggleModal()}
+                buttonStyle={{marginTop: 5}}
               />
             </Card>
           </Body>

@@ -56,6 +56,7 @@ export const Input = styled.TextInput`
   margin-top: 5px;
   font-size: ${RFValue(14)}px;
   font-family: ${(props: themeType) => props.theme.fonts.content};
+  padding: 5px 10px;
   `;
 
 export const Alert = styled.Text`
