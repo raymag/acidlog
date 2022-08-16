@@ -14,6 +14,7 @@ import logService from '../../services/log';
 import {useNavigation} from '@react-navigation/native';
 import {JSHash, CONSTANTS} from 'react-native-hash';
 import RNFetchBlob from 'rn-fetch-blob';
+import DocumentPicker from 'react-native-document-picker';
 
 import {
   Container,
@@ -41,6 +42,7 @@ const Settings = () => {
   const {navigate} = useNavigation<any>();
   const [isModalVisible, toggleModal] = useModal();
   const [isExportModalVisible, toggleExportModal] = useModal();
+  const [isImportModalVisible, toggleImportModal] = useModal();
 
   const submitName = async () => {
     if (name.length === 0) {
@@ -90,6 +92,11 @@ const Settings = () => {
           const permissionGranted = await permissionWriteExternalStorage();
           if (permissionGranted) {
             await RNFetchBlob.fs.createFile(path, JSON.stringify(logs), 'utf8');
+            Warning.alert(
+              'Exportado!',
+              'Seus logs foram exportados com sucesso.',
+              [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+            );
           }
 
           return;
@@ -97,6 +104,38 @@ const Settings = () => {
       }
     } catch (error) {
       console.error('Error exporting logs', error);
+    }
+  };
+
+  const importLogs = async () => {
+    const res = await DocumentPicker.pickSingle({
+      type: [DocumentPicker.types.allFiles],
+      presentationStyle: 'fullScreen',
+    });
+
+    const permissionWriteExternalStorage = async () => {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    };
+
+    if (Platform.OS === 'android') {
+      const permissionGranted = await permissionWriteExternalStorage();
+      if (permissionGranted) {
+        const logs = await RNFetchBlob.fs.readFile(res.uri, 'utf8');
+        if (logs) {
+          await logService.storeLogs(JSON.parse(logs));
+          Warning.alert(
+            'Importado!',
+            'Seus logs foram importados com sucesso.',
+            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+          );
+          navigate('Home', {refresh: true});
+        }
+      }
+
+      return;
     }
   };
 
@@ -166,6 +205,13 @@ const Settings = () => {
         body="Esta opção funciona como um método de backup. Uma cópia dos dados ainda permancerá na aplicação."
         onCancel={() => toggleExportModal()}
         onConfirm={() => exportLogs()}
+      />
+      <Modal
+        isModalVisible={isImportModalVisible}
+        title="Importar logs?"
+        body="Isso substituirá todos os logs contidos na aplicação pelos logs do arquivo importado. Esta ação não pode ser desfeita."
+        onCancel={() => toggleImportModal()}
+        onConfirm={() => importLogs()}
       />
       <Container>
         <Navbar title="ACID LOG" withCloseIcon />
@@ -240,15 +286,21 @@ const Settings = () => {
             </Card>
 
             <Card>
-              <CardTitle>Exportar Logs</CardTitle>
+              <CardTitle>Exportar ou Importar Logs</CardTitle>
               <Text>
-                Isso irá te permitir salvar os logs em outro lugar como uma
-                forma de backup.
+                Isso te permite salvar os logs em outro lugar como uma forma de
+                backup ou importá-los de volta ao app.
               </Text>
               <Button
                 text="Exportar"
-                type="leanPrimary"
+                type="primary"
                 onPress={() => toggleExportModal()}
+                buttonStyle={{marginTop: 5}}
+              />
+              <Button
+                text="Importar"
+                type="leanPrimary"
+                onPress={importLogs}
                 buttonStyle={{marginTop: 5}}
               />
             </Card>
