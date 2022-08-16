@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, ScrollView, Alert as Warning} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  Alert as Warning,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import Navbar from '../../components/Navbar';
 import Button from '../../components/Button';
 import {useModal, Modal} from '../../hooks/Modal';
@@ -7,6 +13,7 @@ import profileService from '../../services/profile';
 import logService from '../../services/log';
 import {useNavigation} from '@react-navigation/native';
 import {JSHash, CONSTANTS} from 'react-native-hash';
+import RNFetchBlob from 'rn-fetch-blob';
 
 import {
   Container,
@@ -33,7 +40,7 @@ const Settings = () => {
   const [nameError, setNameError] = useState<boolean>(false);
   const {navigate} = useNavigation<any>();
   const [isModalVisible, toggleModal] = useModal();
-  // const [isExportModalVisible, toggleExportModal] = useModal();
+  const [isExportModalVisible, toggleExportModal] = useModal();
 
   const submitName = async () => {
     if (name.length === 0) {
@@ -65,31 +72,33 @@ const Settings = () => {
     }
   };
 
-  // const exportLogs = async () => {
-  //   try {
-  //     // const values = [
-  //     //   ['build', '2017-11-05T05:40:35.515Z'],
-  //     //   ['deploy', '2017-11-05T05:42:04.810Z'],
-  //     // ];
-  //     // // construct csvString
-  //     // const headerString = 'event,timestamp\n';
-  //     // const rowString = values.map(d => `${d[0]},${d[1]}\n`).join('');
-  //     // const csvString = `${headerString}${rowString}`;
-  //     // // write the current list of answers to a local csv file
-  //     // const pathToWrite = `${RNFetchBlob.fs.dirs.DownloadDir}/data.csv`;
-  //     // console.log('pathToWrite', pathToWrite);
-  //     // // pathToWrite /storage/emulated/0/Download/data.csv
-  //     // RNFetchBlob.fs
-  //     //   .writeFile(pathToWrite, csvString, 'utf8')
-  //     //   .then(() => {
-  //     //     console.log(`wrote file ${pathToWrite}`);
-  //     //     // wrote file /storage/emulated/0/Download/data.csv
-  //     //   })
-  //     //   .catch(error => console.error(error));
-  //   } catch (error) {
-  //     console.error('Error exporting logs', error);
-  //   }
-  // };
+  const exportLogs = async () => {
+    try {
+      const logs = await logService.getLogs();
+      if (logs && logs.length > 0) {
+        const timestamp = new Date().getTime();
+        const path = `${RNFetchBlob.fs.dirs.DownloadDir}/acidlog_${timestamp}.json`;
+
+        const permissionWriteExternalStorage = async () => {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          );
+          return granted === PermissionsAndroid.RESULTS.GRANTED;
+        };
+
+        if (Platform.OS === 'android') {
+          const permissionGranted = await permissionWriteExternalStorage();
+          if (permissionGranted) {
+            await RNFetchBlob.fs.createFile(path, JSON.stringify(logs), 'utf8');
+          }
+
+          return;
+        }
+      }
+    } catch (error) {
+      console.error('Error exporting logs', error);
+    }
+  };
 
   const handleUpdatePassword = async () => {
     const err = {
@@ -151,13 +160,13 @@ const Settings = () => {
         onCancel={() => toggleModal()}
         onConfirm={clearData}
       />
-      {/* <Modal
+      <Modal
         isModalVisible={isExportModalVisible}
         title="Exportar logs?"
         body="Esta opção funciona como um método de backup. Uma cópia dos dados ainda permancerá na aplicação."
         onCancel={() => toggleExportModal()}
         onConfirm={() => exportLogs()}
-      /> */}
+      />
       <Container>
         <Navbar title="ACID LOG" withCloseIcon />
         <ScrollView>
@@ -230,7 +239,7 @@ const Settings = () => {
               />
             </Card>
 
-            {/* <Card>
+            <Card>
               <CardTitle>Exportar Logs</CardTitle>
               <Text>
                 Isso irá te permitir salvar os logs em outro lugar como uma
@@ -242,7 +251,7 @@ const Settings = () => {
                 onPress={() => toggleExportModal()}
                 buttonStyle={{marginTop: 5}}
               />
-            </Card> */}
+            </Card>
 
             <Card>
               <CardTitle>Remover Dados</CardTitle>
