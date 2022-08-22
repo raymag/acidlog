@@ -14,6 +14,7 @@ export const ModalView = styled.View`
   padding: 20px;
   border-radius: 5px;
   min-width: 80%;
+  margin: 0 10px;
 `;
 export const Title = styled.Text`
   font-size: ${RFValue(20)}px;
