@@ -1,4 +1,4 @@
-package com.acidlog.newarchitecture.components;
+package com.raymag.acidlog.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

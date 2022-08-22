@@ -1,4 +1,4 @@
-package com.acidlog.newarchitecture.modules;
+package com.raymag.acidlog.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
